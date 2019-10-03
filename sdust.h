@@ -1,6 +1,8 @@
 #ifndef SDUST_H
 #define SDUST_H
 
+#define SDUST_VERSION "0.1-r2"
+
 #include <stdint.h>
 
 #ifdef __cplusplus
