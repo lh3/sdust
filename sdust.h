@@ -9,16 +9,16 @@
 extern "C" {
 #endif
 
-struct sdust_buf_s;
-typedef struct sdust_buf_s sdust_buf_t;
+struct sdust_s;
+typedef struct sdust_s sdust_t;
 
-// the simple interface
-uint64_t *sdust(void *km, const uint8_t *seq, int l_seq, int T, int W, int *n);
+typedef struct {
+	int64_t st, en;
+} sdust_intv_t;
 
-// the following interface dramatically reduce heap allocations when sdust is frequently called.
-sdust_buf_t *sdust_buf_init(void *km);
-void sdust_buf_destroy(sdust_buf_t *buf);
-const uint64_t *sdust_core(const uint8_t *seq, int l_seq, int T, int W, int *n, sdust_buf_t *buf);
+sdust_t *sdust_init(void *km, int32_t kmer, int32_t ws, double thres);
+void sdust_destroy(sdust_t *buf);
+const sdust_intv_t *sdust_seq(sdust_t *sd, const uint8_t *seq, int64_t l_seq, int64_t *n);
 
 #ifdef __cplusplus
 }
