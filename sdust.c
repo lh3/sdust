@@ -77,8 +77,8 @@ static inline int32_t sd_knt_dec(sd_knt_t *h, uint32_t t)
 	k = sd_knt_get(h, t);
 	if (k == kh_end(h)) return -1;
 	ret = kh_val(h, k) - 1;
-	if (ret == 1)
-		sd_knt_del(h, k);
+	if (ret == 0) sd_knt_del(h, k);
+	else --kh_val(h, k);
 	return ret;
 }
 
@@ -87,8 +87,7 @@ static inline int32_t sd_knt_inc(sd_knt_t *h, uint32_t t)
 	int32_t ret, absent;
 	khint_t k;
 	k = sd_knt_put(h, t, &absent);
-	if (absent)
-		kh_val(h, k) = 0;
+	if (absent) kh_val(h, k) = 0;
 	ret = kh_val(h, k);
 	++kh_val(h, k);
 	return ret;
